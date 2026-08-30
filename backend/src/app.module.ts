@@ -8,6 +8,7 @@ import { UsersModule } from './users/users.module.js';
 import { AuthModule } from './auth/auth.module.js';
 import { CompetencesModule } from './competences/competences.module.js';
 import { ParcoursModule } from './parcours/parcours.module.js';
+import { EvaluationsModule } from './evaluations/evaluations.module.js';
 
 @Module({
   imports: [
@@ -18,6 +19,7 @@ import { ParcoursModule } from './parcours/parcours.module.js';
     AuthModule,
     CompetencesModule,
     ParcoursModule,
+    EvaluationsModule,
   ],
   controllers: [AppController],
   providers: [AppService],
