@@ -65,7 +65,7 @@ model Evaluation {
 
 model Competence {
   id            Int     @id @default(autoincrement()) @map("id_competence")
-  nomCompetence String  @map("nom_competence") @db.VarChar(100)
+  nomCompetence String  @unique @map("nom_competence") @db.VarChar(100)
   description   String? @db.Text
 
   utilisateurs CompetenceUtilisateur[]
