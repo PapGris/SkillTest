@@ -24,6 +24,8 @@ export interface ReponseOption {
   id: number;
   texteReponse: string;
   questionId: number;
+  /** Present uniquement quand l'appelant est Manager/Responsable RH (jamais pour un Collaborateur) */
+  estCorrecte?: boolean;
 }
 
 export interface QuestionDetail {

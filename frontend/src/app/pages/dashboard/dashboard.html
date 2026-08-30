@@ -6,10 +6,11 @@
 
   @if (authService.hasRole('Collaborateur')) {
     <app-dashboard-collaborateur />
+  } @else if (authService.hasRole('Manager', 'Responsable RH')) {
+    <app-dashboard-manager />
   } @else {
     <div class="carte-placeholder">
       <p>Ton tableau de bord est en cours de construction.</p>
-      <p class="sous-texte">Bientot ici : gestion des parcours, des competences et rapports d'equipe.</p>
     </div>
   }
 </main>

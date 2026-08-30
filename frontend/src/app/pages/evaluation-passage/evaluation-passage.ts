@@ -1,5 +1,6 @@
 import { Component, OnInit, inject, signal } from '@angular/core';
 import { ActivatedRoute, RouterLink } from '@angular/router';
+import { FormsModule } from '@angular/forms';
 import { HttpErrorResponse } from '@angular/common/http';
 import { Navbar } from '../../shared/navbar/navbar';
 import { EvaluationsService } from '../../core/services/evaluations.service';
@@ -9,7 +10,7 @@ import type { EvaluationDetail, ReponseSoumise, ResultatPassage } from '../../co
 
 @Component({
   selector: 'app-evaluation-passage',
-  imports: [Navbar, RouterLink],
+  imports: [Navbar, RouterLink, FormsModule],
   templateUrl: './evaluation-passage.html',
   styleUrl: './evaluation-passage.scss',
 })

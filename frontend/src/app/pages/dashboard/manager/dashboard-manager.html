@@ -1,0 +1,40 @@
+<nav class="onglets">
+  <button
+    type="button"
+    class="onglet"
+    [class.actif]="ongletActif() === 'parcours'"
+    (click)="choisirOnglet('parcours')"
+  >
+    Parcours &amp; evaluations
+  </button>
+  <button
+    type="button"
+    class="onglet"
+    [class.actif]="ongletActif() === 'rapports'"
+    (click)="choisirOnglet('rapports')"
+  >
+    Rapports
+  </button>
+  <button
+    type="button"
+    class="onglet"
+    [class.actif]="ongletActif() === 'collaborateurs'"
+    (click)="choisirOnglet('collaborateurs')"
+  >
+    Collaborateurs
+  </button>
+</nav>
+
+<div class="contenu-onglet">
+  @switch (ongletActif()) {
+    @case ('parcours') {
+      <app-onglet-parcours />
+    }
+    @case ('rapports') {
+      <app-onglet-rapports />
+    }
+    @case ('collaborateurs') {
+      <app-onglet-collaborateurs />
+    }
+  }
+</div>

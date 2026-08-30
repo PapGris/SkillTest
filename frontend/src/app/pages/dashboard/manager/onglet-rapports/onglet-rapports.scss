@@ -1,0 +1,129 @@
+.etat {
+  color: var(--couleur-texte-clair);
+  font-size: 0.9rem;
+  padding: 1rem 0;
+}
+
+.message-erreur {
+  margin-bottom: 1rem;
+}
+
+.lien-retour {
+  background: none;
+  border: none;
+  color: var(--couleur-texte-clair);
+  font-size: 0.85rem;
+  cursor: pointer;
+  padding: 0;
+  margin-bottom: 1.25rem;
+
+  &:hover {
+    color: var(--couleur-primaire);
+  }
+}
+
+h2 {
+  font-size: 1.3rem;
+  font-weight: 700;
+}
+
+.sous-titre {
+  margin-top: 0.3rem;
+  color: var(--couleur-texte-clair);
+  font-size: 0.88rem;
+  margin-bottom: 1.5rem;
+}
+
+.grille-evaluations {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(220px, 1fr));
+  gap: 1rem;
+}
+
+.carte-evaluation {
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+  gap: 0.4rem;
+  background: var(--couleur-fond);
+  border: 1px solid var(--couleur-bordure);
+  border-radius: var(--rayon);
+  padding: 1.25rem;
+  cursor: pointer;
+  font-family: inherit;
+  text-align: left;
+  transition: border-color 0.15s ease;
+
+  &:hover {
+    border-color: var(--couleur-primaire);
+  }
+}
+
+.type-badge {
+  display: inline-block;
+  padding: 0.15rem 0.55rem;
+  border-radius: 999px;
+  background: color-mix(in srgb, var(--couleur-primaire) 12%, transparent);
+  color: var(--couleur-primaire);
+  font-size: 0.68rem;
+  font-weight: 700;
+  text-transform: uppercase;
+}
+
+.carte-evaluation h3 {
+  font-size: 0.95rem;
+  font-weight: 700;
+}
+
+.parcours {
+  font-size: 0.8rem;
+  color: var(--couleur-texte-clair);
+}
+
+.carte-moyenne {
+  background: color-mix(in srgb, var(--couleur-primaire) 8%, transparent);
+  border: 1px solid var(--couleur-primaire);
+  border-radius: var(--rayon);
+  padding: 1rem 1.25rem;
+  margin-bottom: 1.25rem;
+
+  .label {
+    font-size: 0.75rem;
+    color: var(--couleur-texte-clair);
+    text-transform: uppercase;
+    font-weight: 600;
+  }
+
+  .valeur {
+    margin-top: 0.2rem;
+    font-size: 1.1rem;
+    font-weight: 700;
+    color: var(--couleur-primaire);
+  }
+}
+
+.tableau-passages {
+  width: 100%;
+  border-collapse: collapse;
+  font-size: 0.85rem;
+
+  th {
+    text-align: left;
+    padding: 0.6rem 0.75rem;
+    color: var(--couleur-texte-clair);
+    font-weight: 600;
+    border-bottom: 1px solid var(--couleur-bordure);
+    font-size: 0.78rem;
+    text-transform: uppercase;
+  }
+
+  td {
+    padding: 0.7rem 0.75rem;
+    border-bottom: 1px solid var(--couleur-bordure);
+  }
+
+  .score {
+    font-weight: 700;
+    color: var(--couleur-primaire);
+  }
+}

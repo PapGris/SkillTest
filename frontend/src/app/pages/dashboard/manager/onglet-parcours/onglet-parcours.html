@@ -1,0 +1,167 @@
+@if (erreur()) {
+  <p class="message-erreur">{{ erreur() }}</p>
+}
+
+@if (chargement()) {
+  <p class="etat">Chargement des parcours...</p>
+} @else if (parcoursSelectionne(); as parcours) {
+  <button type="button" class="lien-retour" (click)="retourListeParcours()">&larr; Tous les parcours</button>
+
+  <h2>{{ parcours.titre }}</h2>
+  @if (parcours.description) {
+    <p class="description">{{ parcours.description }}</p>
+  }
+
+  <h3 class="sous-section">Evaluations de ce parcours</h3>
+
+  @if (chargementEvaluations()) {
+    <p class="etat">Chargement...</p>
+  } @else {
+    <div class="liste-evaluations">
+      @for (evaluation of evaluationsDuParcours(); track evaluation.id) {
+        <div class="carte-evaluation">
+          <div class="entete-evaluation">
+            <div>
+              <span class="type-badge">{{ evaluation.typeEvaluation }}</span>
+              <h4>{{ evaluation.titre }}</h4>
+              <p class="nb-questions">{{ evaluation._count.questions }} question(s)</p>
+            </div>
+            <div class="actions-evaluation">
+              <button type="button" class="btn btn-secondaire" (click)="basculerQuestions(evaluation.id)">
+                {{ evaluationDetailleeId() === evaluation.id ? 'Masquer les questions' : 'Voir les questions' }}
+              </button>
+              <button type="button" class="btn btn-secondaire" (click)="basculerFormulaireQuestion(evaluation.id)">
+                {{ questionOuvertePourEvaluationId() === evaluation.id ? 'Annuler' : '+ Ajouter une question' }}
+              </button>
+              <button type="button" class="btn-danger" (click)="supprimerEvaluation(evaluation)">Supprimer</button>
+            </div>
+          </div>
+
+          @if (evaluationDetailleeId() === evaluation.id) {
+            @if (chargementQuestions()) {
+              <p class="etat">Chargement des questions...</p>
+            } @else if (detailEvaluation(); as detail) {
+              @if (detail.questions.length === 0) {
+                <p class="etat">Aucune question pour le moment.</p>
+              } @else {
+                <div class="liste-questions-existantes">
+                  @for (question of detail.questions; track question.id) {
+                    <div class="carte-question-existante">
+                      <div class="entete-question">
+                        <p class="enonce-question">{{ question.enonce }} <span class="points">({{ question.points }} pt{{ question.points > 1 ? 's' : '' }})</span></p>
+                        <button type="button" class="btn-lien-danger" (click)="supprimerQuestion(question.id, evaluation.id)">Supprimer</button>
+                      </div>
+                      <ul class="options-question">
+                        @for (reponse of question.reponses; track reponse.id) {
+                          <li [class.bonne]="reponse.estCorrecte">{{ reponse.texteReponse }}</li>
+                        }
+                      </ul>
+                    </div>
+                  }
+                </div>
+              }
+            }
+          }
+
+          @if (questionOuvertePourEvaluationId() === evaluation.id) {
+            <form class="formulaire-question" [formGroup]="formulaireQuestion" (ngSubmit)="ajouterQuestion(evaluation.id)">
+              <div class="champ">
+                <label for="enonce-{{ evaluation.id }}">Enonce de la question</label>
+                <textarea id="enonce-{{ evaluation.id }}" formControlName="enonce" rows="2"></textarea>
+              </div>
+
+              <div class="champ champ-points">
+                <label for="points-{{ evaluation.id }}">Points</label>
+                <input id="points-{{ evaluation.id }}" type="number" min="1" formControlName="points" />
+              </div>
+
+              <div class="liste-reponses" formArrayName="reponses">
+                <p class="label-reponses">Reponses possibles (coche celles qui sont correctes)</p>
+                @for (reponse of reponsesFormArray.controls; track $index) {
+                  <div class="ligne-reponse" [formGroupName]="$index">
+                    <input type="checkbox" formControlName="estCorrecte" />
+                    <input type="text" formControlName="texteReponse" placeholder="Texte de la reponse" class="champ-texte-reponse" />
+                    @if (reponsesFormArray.length > 2) {
+                      <button type="button" class="btn-lien-danger" (click)="retirerChoixReponse($index)">Retirer</button>
+                    }
+                  </div>
+                }
+                <button type="button" class="btn-lien" (click)="ajouterChoixReponse()">+ Ajouter une reponse</button>
+              </div>
+
+              <button type="submit" class="btn btn-primaire" [disabled]="envoiEnCours()">
+                {{ envoiEnCours() ? 'Envoi...' : 'Enregistrer la question' }}
+              </button>
+            </form>
+          }
+        </div>
+      } @empty {
+        <p class="etat">Aucune evaluation pour ce parcours.</p>
+      }
+    </div>
+
+    @if (formulaireEvaluationOuvert()) {
+      <form class="formulaire-inline" [formGroup]="formulaireEvaluation" (ngSubmit)="creerEvaluation()">
+        <div class="champ">
+          <label for="titre-eval">Titre de l'evaluation</label>
+          <input id="titre-eval" type="text" formControlName="titre" />
+        </div>
+        <div class="champ">
+          <label for="type-eval">Type</label>
+          <select id="type-eval" formControlName="typeEvaluation">
+            <option value="Quiz">Quiz</option>
+            <option value="Simulation">Simulation</option>
+          </select>
+        </div>
+        <button type="submit" class="btn btn-primaire" [disabled]="envoiEnCours()">
+          {{ envoiEnCours() ? 'Creation...' : 'Creer' }}
+        </button>
+      </form>
+    } @else {
+      <button type="button" class="btn btn-secondaire" (click)="formulaireEvaluationOuvert.set(true)">
+        + Nouvelle evaluation
+      </button>
+    }
+  }
+} @else {
+  @if (formulaireParcoursOuvert()) {
+    <form class="formulaire-inline" [formGroup]="formulaireParcours" (ngSubmit)="creerParcours()">
+      <div class="champ">
+        <label for="titre-parcours">Titre du parcours</label>
+        <input id="titre-parcours" type="text" formControlName="titre" />
+      </div>
+      <div class="champ">
+        <label for="description-parcours">Description (optionnel)</label>
+        <textarea id="description-parcours" formControlName="description" rows="2"></textarea>
+      </div>
+      <div class="actions-formulaire">
+        <button type="submit" class="btn btn-primaire" [disabled]="envoiEnCours()">
+          {{ envoiEnCours() ? 'Creation...' : 'Creer le parcours' }}
+        </button>
+        <button type="button" class="btn btn-secondaire" (click)="formulaireParcoursOuvert.set(false)">Annuler</button>
+      </div>
+    </form>
+  } @else {
+    <button type="button" class="btn btn-primaire" (click)="formulaireParcoursOuvert.set(true)">
+      + Nouveau parcours
+    </button>
+  }
+
+  <div class="grille-parcours">
+    @for (parcours of parcours(); track parcours.id) {
+      <div class="carte-parcours">
+        <h3>{{ parcours.titre }}</h3>
+        @if (parcours.description) {
+          <p class="description">{{ parcours.description }}</p>
+        }
+        <p class="meta">{{ parcours._count.evaluations }} evaluation(s) — cree par {{ parcours.createur.prenom }}</p>
+        <div class="actions-carte">
+          <button type="button" class="btn btn-secondaire" (click)="selectionnerParcours(parcours)">Gerer</button>
+          <button type="button" class="btn-danger" (click)="supprimerParcours(parcours)">Supprimer</button>
+        </div>
+      </div>
+    } @empty {
+      <p class="etat">Aucun parcours pour le moment.</p>
+    }
+  </div>
+}

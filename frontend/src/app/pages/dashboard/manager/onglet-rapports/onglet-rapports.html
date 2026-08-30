@@ -1,0 +1,56 @@
+@if (erreur()) {
+  <p class="message-erreur">{{ erreur() }}</p>
+}
+
+@if (chargement()) {
+  <p class="etat">Chargement des evaluations...</p>
+} @else if (evaluationSelectionnee(); as evaluation) {
+  <button type="button" class="lien-retour" (click)="retourListeEvaluations()">&larr; Toutes les evaluations</button>
+
+  <h2>{{ evaluation.titre }}</h2>
+  <p class="sous-titre">{{ evaluation.typeEvaluation }} — {{ evaluation.parcours.titre }}</p>
+
+  @if (chargementPassages()) {
+    <p class="etat">Chargement des tentatives...</p>
+  } @else if (passages().length === 0) {
+    <p class="etat">Aucune tentative pour cette evaluation pour le moment.</p>
+  } @else {
+    <div class="carte-moyenne">
+      <p class="label">Moyenne</p>
+      <p class="valeur">{{ moyenne() }} points ({{ passages().length }} tentative(s))</p>
+    </div>
+
+    <table class="tableau-passages">
+      <thead>
+        <tr>
+          <th>Collaborateur</th>
+          <th>Email</th>
+          <th>Score</th>
+          <th>Date</th>
+        </tr>
+      </thead>
+      <tbody>
+        @for (passage of passages(); track passage.id) {
+          <tr>
+            <td>{{ passage.utilisateur.prenom }} {{ passage.utilisateur.nom }}</td>
+            <td>{{ passage.utilisateur.email }}</td>
+            <td class="score">{{ passage.scoreObtenu }} pts</td>
+            <td>{{ passage.datePassage | date: 'dd/MM/yyyy HH:mm' }}</td>
+          </tr>
+        }
+      </tbody>
+    </table>
+  }
+} @else {
+  <div class="grille-evaluations">
+    @for (evaluation of evaluations(); track evaluation.id) {
+      <button type="button" class="carte-evaluation" (click)="selectionnerEvaluation(evaluation)">
+        <span class="type-badge">{{ evaluation.typeEvaluation }}</span>
+        <h3>{{ evaluation.titre }}</h3>
+        <p class="parcours">{{ evaluation.parcours.titre }}</p>
+      </button>
+    } @empty {
+      <p class="etat">Aucune evaluation n'existe encore.</p>
+    }
+  </div>
+}

@@ -1,0 +1,65 @@
+@if (erreur()) {
+  <p class="message-erreur">{{ erreur() }}</p>
+}
+
+@if (chargement()) {
+  <p class="etat">Chargement des collaborateurs...</p>
+} @else if (collaborateurSelectionne(); as collaborateur) {
+  <button type="button" class="lien-retour" (click)="retourListe()">&larr; Tous les collaborateurs</button>
+
+  <h2>{{ collaborateur.prenom }} {{ collaborateur.nom }}</h2>
+  <p class="sous-titre">{{ collaborateur.email }}</p>
+
+  @if (chargementDetail()) {
+    <p class="etat">Chargement...</p>
+  } @else {
+    <h3 class="sous-section">Competences auto-evaluees</h3>
+    @if (competences().length === 0) {
+      <p class="etat">Aucune competence auto-evaluee.</p>
+    } @else {
+      <div class="liste-competences">
+        @for (competence of competences(); track competence.competenceId) {
+          <div class="ligne-competence">
+            <span>{{ competence.competence.nomCompetence }}</span>
+            <span class="niveau">{{ competence.niveauEstime }}/5</span>
+          </div>
+        }
+      </div>
+    }
+
+    <h3 class="sous-section">Historique des evaluations</h3>
+    @if (passages().length === 0) {
+      <p class="etat">Aucune evaluation passee.</p>
+    } @else {
+      <table class="tableau-passages">
+        <thead>
+          <tr>
+            <th>Evaluation</th>
+            <th>Score</th>
+            <th>Date</th>
+          </tr>
+        </thead>
+        <tbody>
+          @for (passage of passages(); track passage.id) {
+            <tr>
+              <td>{{ passage.evaluation.titre }}</td>
+              <td class="score">{{ passage.scoreObtenu }} pts</td>
+              <td>{{ passage.datePassage | date: 'dd/MM/yyyy HH:mm' }}</td>
+            </tr>
+          }
+        </tbody>
+      </table>
+    }
+  }
+} @else {
+  <div class="grille-collaborateurs">
+    @for (collaborateur of collaborateurs(); track collaborateur.id) {
+      <button type="button" class="carte-collaborateur" (click)="selectionner(collaborateur)">
+        <h3>{{ collaborateur.prenom }} {{ collaborateur.nom }}</h3>
+        <p class="email">{{ collaborateur.email }}</p>
+      </button>
+    } @empty {
+      <p class="etat">Aucun collaborateur inscrit pour le moment.</p>
+    }
+  </div>
+}

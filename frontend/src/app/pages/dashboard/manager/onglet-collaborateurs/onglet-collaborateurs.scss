@@ -1,0 +1,124 @@
+.etat {
+  color: var(--couleur-texte-clair);
+  font-size: 0.9rem;
+  padding: 1rem 0;
+}
+
+.message-erreur {
+  margin-bottom: 1rem;
+}
+
+.lien-retour {
+  background: none;
+  border: none;
+  color: var(--couleur-texte-clair);
+  font-size: 0.85rem;
+  cursor: pointer;
+  padding: 0;
+  margin-bottom: 1.25rem;
+
+  &:hover {
+    color: var(--couleur-primaire);
+  }
+}
+
+h2 {
+  font-size: 1.3rem;
+  font-weight: 700;
+}
+
+.sous-titre {
+  margin-top: 0.3rem;
+  color: var(--couleur-texte-clair);
+  font-size: 0.88rem;
+  margin-bottom: 1.5rem;
+}
+
+.sous-section {
+  margin-top: 1.75rem;
+  margin-bottom: 0.9rem;
+  font-size: 1rem;
+  font-weight: 700;
+}
+
+.grille-collaborateurs {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(220px, 1fr));
+  gap: 1rem;
+}
+
+.carte-collaborateur {
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+  gap: 0.3rem;
+  background: var(--couleur-fond);
+  border: 1px solid var(--couleur-bordure);
+  border-radius: var(--rayon);
+  padding: 1.25rem;
+  cursor: pointer;
+  font-family: inherit;
+  text-align: left;
+  transition: border-color 0.15s ease;
+
+  &:hover {
+    border-color: var(--couleur-primaire);
+  }
+
+  h3 {
+    font-size: 0.95rem;
+    font-weight: 700;
+  }
+
+  .email {
+    font-size: 0.8rem;
+    color: var(--couleur-texte-clair);
+  }
+}
+
+.liste-competences {
+  display: flex;
+  flex-direction: column;
+  gap: 0.4rem;
+}
+
+.ligne-competence {
+  display: flex;
+  justify-content: space-between;
+  background: var(--couleur-fond);
+  border: 1px solid var(--couleur-bordure);
+  border-radius: var(--rayon);
+  padding: 0.65rem 1rem;
+  font-size: 0.88rem;
+
+  .niveau {
+    font-weight: 700;
+    color: var(--couleur-primaire);
+  }
+}
+
+.tableau-passages {
+  width: 100%;
+  border-collapse: collapse;
+  font-size: 0.85rem;
+
+  th {
+    text-align: left;
+    padding: 0.6rem 0.75rem;
+    color: var(--couleur-texte-clair);
+    font-weight: 600;
+    border-bottom: 1px solid var(--couleur-bordure);
+    font-size: 0.78rem;
+    text-transform: uppercase;
+  }
+
+  td {
+    padding: 0.7rem 0.75rem;
+    border-bottom: 1px solid var(--couleur-bordure);
+  }
+
+  .score {
+    font-weight: 700;
+    color: var(--couleur-primaire);
+  }
+}

@@ -3,6 +3,7 @@ import { HttpClient } from '@angular/common/http';
 import { Observable } from 'rxjs';
 import { API_URL } from '../config';
 import type { PassageDetail, PassageListItem, ReponseSoumise, ResultatPassage } from '../models/quiz.models';
+import type { PassageRapport } from '../models/gestion.models';
 
 @Injectable({ providedIn: 'root' })
 export class PassagesService {
@@ -18,5 +19,9 @@ export class PassagesService {
 
   getUnPassage(id: number): Observable<PassageDetail> {
     return this.http.get<PassageDetail>(`${API_URL}/me/passages/${id}`);
+  }
+
+  getPourEvaluation(evaluationId: number): Observable<PassageRapport[]> {
+    return this.http.get<PassageRapport[]>(`${API_URL}/evaluations/${evaluationId}/passages`);
   }
 }
