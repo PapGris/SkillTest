@@ -1,0 +1,54 @@
+@if (erreur()) {
+  <p class="message-erreur">{{ erreur() }}</p>
+}
+
+<p class="intro">Referentiel des competences techniques de l'organisation, utilisees dans les auto-evaluations et les questions de quiz.</p>
+
+@if (formulaireOuvert()) {
+  <form class="formulaire-inline" [formGroup]="formulaireCompetence" (ngSubmit)="enregistrer()">
+    <div class="champ">
+      <label for="nom-competence">Nom de la competence</label>
+      <input id="nom-competence" type="text" formControlName="nomCompetence" />
+    </div>
+    <div class="champ">
+      <label for="description-competence">Description (optionnel)</label>
+      <textarea id="description-competence" formControlName="description" rows="2"></textarea>
+    </div>
+    <div class="actions-formulaire">
+      <button type="submit" class="btn btn-primaire" [disabled]="envoiEnCours()">
+        {{ envoiEnCours() ? 'Enregistrement...' : (competenceEnEdition() ? 'Enregistrer les modifications' : 'Creer la competence') }}
+      </button>
+      <button type="button" class="btn btn-secondaire" (click)="annuler()">Annuler</button>
+    </div>
+  </form>
+} @else {
+  <button type="button" class="btn btn-primaire" (click)="ouvrirCreation()">+ Nouvelle competence</button>
+}
+
+@if (chargement()) {
+  <p class="etat">Chargement des competences...</p>
+} @else if (competences().length === 0) {
+  <p class="etat">Aucune competence n'existe encore.</p>
+} @else {
+  <table class="tableau-competences">
+    <thead>
+      <tr>
+        <th>Nom</th>
+        <th>Description</th>
+        <th></th>
+      </tr>
+    </thead>
+    <tbody>
+      @for (competence of competences(); track competence.id) {
+        <tr>
+          <td>{{ competence.nomCompetence }}</td>
+          <td>{{ competence.description || '—' }}</td>
+          <td class="actions-ligne">
+            <button type="button" class="btn-lien" (click)="ouvrirEdition(competence)">Modifier</button>
+            <button type="button" class="btn-lien-danger" (click)="supprimer(competence)">Supprimer</button>
+          </td>
+        </tr>
+      }
+    </tbody>
+  </table>
+}

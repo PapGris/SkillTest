@@ -1,0 +1,77 @@
+.etat {
+  color: var(--couleur-texte-clair);
+  font-size: 0.9rem;
+  padding: 1rem 0;
+}
+
+.message-erreur {
+  margin-bottom: 1rem;
+}
+
+.intro {
+  color: var(--couleur-texte-clair);
+  font-size: 0.88rem;
+  margin-bottom: 1.5rem;
+}
+
+.grille-stats {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(150px, 1fr));
+  gap: 1rem;
+  margin-bottom: 2rem;
+}
+
+.carte-stat {
+  background: var(--couleur-fond);
+  border: 1px solid var(--couleur-bordure);
+  border-radius: var(--rayon);
+  padding: 1.25rem;
+  text-align: center;
+
+  .valeur {
+    font-size: 1.8rem;
+    font-weight: 700;
+    color: var(--couleur-primaire);
+  }
+
+  .label {
+    margin-top: 0.3rem;
+    font-size: 0.78rem;
+    color: var(--couleur-texte-clair);
+    text-transform: uppercase;
+    font-weight: 600;
+  }
+}
+
+.sous-section {
+  margin-top: 2rem;
+  margin-bottom: 1rem;
+  font-size: 1rem;
+  font-weight: 700;
+}
+
+.tableau-parcours {
+  width: 100%;
+  border-collapse: collapse;
+  font-size: 0.85rem;
+
+  th {
+    text-align: left;
+    padding: 0.6rem 0.75rem;
+    color: var(--couleur-texte-clair);
+    font-weight: 600;
+    border-bottom: 1px solid var(--couleur-bordure);
+    font-size: 0.78rem;
+    text-transform: uppercase;
+  }
+
+  td {
+    padding: 0.7rem 0.75rem;
+    border-bottom: 1px solid var(--couleur-bordure);
+  }
+
+  .score {
+    font-weight: 700;
+    color: var(--couleur-primaire);
+  }
+}

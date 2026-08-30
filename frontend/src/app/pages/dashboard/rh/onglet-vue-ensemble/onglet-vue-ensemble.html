@@ -1,0 +1,62 @@
+@if (erreur()) {
+  <p class="message-erreur">{{ erreur() }}</p>
+}
+
+@if (chargement()) {
+  <p class="etat">Chargement de la vue d'ensemble...</p>
+} @else {
+  <p class="intro">
+    Vue de supervision, en lecture seule, sur l'ensemble des parcours et evaluations de
+    l'organisation.
+  </p>
+
+  <div class="grille-stats">
+    <div class="carte-stat">
+      <p class="valeur">{{ parcours().length }}</p>
+      <p class="label">Parcours</p>
+    </div>
+    <div class="carte-stat">
+      <p class="valeur">{{ totalEvaluations() }}</p>
+      <p class="label">Evaluations</p>
+    </div>
+    <div class="carte-stat">
+      <p class="valeur">{{ totalCompetences() }}</p>
+      <p class="label">Competences referencees</p>
+    </div>
+    <div class="carte-stat">
+      <p class="valeur">{{ totalPassages() }}</p>
+      <p class="label">Tentatives passees</p>
+    </div>
+    <div class="carte-stat">
+      <p class="valeur">{{ scoreMoyenGlobal() ?? '—' }}</p>
+      <p class="label">Score moyen global</p>
+    </div>
+  </div>
+
+  <h3 class="sous-section">Parcours de l'organisation</h3>
+
+  @if (parcours().length === 0) {
+    <p class="etat">Aucun parcours n'existe encore.</p>
+  } @else {
+    <table class="tableau-parcours">
+      <thead>
+        <tr>
+          <th>Titre</th>
+          <th>Description</th>
+          <th>Cree par</th>
+          <th>Evaluations</th>
+        </tr>
+      </thead>
+      <tbody>
+        @for (p of parcours(); track p.id) {
+          <tr>
+            <td>{{ p.titre }}</td>
+            <td>{{ p.description || '—' }}</td>
+            <td>{{ p.createur.prenom }} {{ p.createur.nom }}</td>
+            <td class="score">{{ p._count.evaluations }}</td>
+          </tr>
+        }
+      </tbody>
+    </table>
+  }
+}

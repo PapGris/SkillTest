@@ -1,4 +1,5 @@
-import { Injectable, NotFoundException } from '@nestjs/common';
+import { ConflictException, Injectable, NotFoundException } from '@nestjs/common';
+import { Prisma } from '@prisma/client';
 import { PrismaService } from '../prisma/prisma.service.js';
 import type { CreateCompetenceDto } from './dto/create-competence.dto.js';
 import type { UpdateCompetenceDto } from './dto/update-competence.dto.js';
@@ -30,8 +31,17 @@ export class CompetencesService {
 
   async remove(id: number) {
     await this.findOne(id);
-    await this.prisma.competence.delete({ where: { id } });
-    return { success: true };
+    try {
+      await this.prisma.competence.delete({ where: { id } });
+      return { success: true };
+    } catch (error) {
+      if (error instanceof Prisma.PrismaClientKnownRequestError && error.code === 'P2003') {
+        throw new ConflictException(
+          "Impossible de supprimer cette competence : elle est encore utilisee (auto-evaluations et/ou questions liees).",
+        );
+      }
+      throw error;
+    }
   }
 
   findMesCompetences(utilisateurId: number) {

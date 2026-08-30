@@ -39,6 +39,13 @@ export interface PassageRapport {
   utilisateur: { id: number; nom: string; prenom: string; email: string };
 }
 
+export interface CreerCompetencePayload {
+  nomCompetence: string;
+  description?: string;
+}
+
+export type ModifierCompetencePayload = Partial<CreerCompetencePayload>;
+
 export interface UtilisateurListItem {
   id: number;
   nom: string;
