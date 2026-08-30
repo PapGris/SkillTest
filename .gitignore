@@ -34,3 +34,6 @@ coverage/
 
 # Docker volumes (donnees MySQL persistees en dehors du repo)
 docker/mysql-data/
+
+# TypeScript incremental build cache
+*.tsbuildinfo
