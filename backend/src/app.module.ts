@@ -9,6 +9,7 @@ import { AuthModule } from './auth/auth.module.js';
 import { CompetencesModule } from './competences/competences.module.js';
 import { ParcoursModule } from './parcours/parcours.module.js';
 import { EvaluationsModule } from './evaluations/evaluations.module.js';
+import { PassagesModule } from './passages/passages.module.js';
 
 @Module({
   imports: [
@@ -20,6 +21,7 @@ import { EvaluationsModule } from './evaluations/evaluations.module.js';
     CompetencesModule,
     ParcoursModule,
     EvaluationsModule,
+    PassagesModule,
   ],
   controllers: [AppController],
   providers: [AppService],

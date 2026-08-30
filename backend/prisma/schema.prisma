@@ -1,6 +1,8 @@
 // Schema Prisma - genere a partir du MLD fourni (Role, Utilisateur, Parcours,
 // Evaluation, Competence, Competence_Utilisateur, Question, Reponse, Passage_Evaluation)
-// A VALIDER ENSEMBLE avant la premiere migration.
+// Extension ajoutee par rapport au MLD original : PassageReponse (detail des
+// reponses choisies a chaque tentative), decidee avec l'utilisateur le 30/08/2026
+// pour permettre une correction detaillee (pas juste le score final).
 
 generator client {
   provider = "prisma-client-js"
@@ -28,10 +30,10 @@ model Utilisateur {
   roleId     Int      @map("id_role")
   createdAt  DateTime @default(now()) @map("created_at")
 
-  role               Role                     @relation(fields: [roleId], references: [id])
-  parcoursCrees      Parcours[]               @relation("ParcoursCreateur")
-  competences        CompetenceUtilisateur[]
-  passages           PassageEvaluation[]
+  role          Role                     @relation(fields: [roleId], references: [id])
+  parcoursCrees Parcours[]               @relation("ParcoursCreateur")
+  competences   CompetenceUtilisateur[]
+  passages      PassageEvaluation[]
 
   @@map("utilisateur")
 }
@@ -92,9 +94,10 @@ model Question {
   evaluationId Int     @map("id_evaluation")
   competenceId Int?    @map("id_competence")
 
-  evaluation Evaluation  @relation(fields: [evaluationId], references: [id])
-  competence Competence? @relation(fields: [competenceId], references: [id])
-  reponses   Reponse[]
+  evaluation      Evaluation       @relation(fields: [evaluationId], references: [id])
+  competence      Competence?      @relation(fields: [competenceId], references: [id])
+  reponses        Reponse[]
+  passageReponses PassageReponse[]
 
   @@map("question")
 }
@@ -105,7 +108,8 @@ model Reponse {
   estCorrecte  Boolean @map("est_correcte")
   questionId   Int     @map("id_question")
 
-  question Question @relation(fields: [questionId], references: [id])
+  question        Question         @relation(fields: [questionId], references: [id])
+  passageReponses PassageReponse[]
 
   @@map("reponse")
 }
@@ -118,8 +122,25 @@ model PassageEvaluation {
   utilisateurId Int      @map("id_utilisateur")
   evaluationId  Int      @map("id_evaluation")
 
-  utilisateur Utilisateur @relation(fields: [utilisateurId], references: [id])
-  evaluation  Evaluation  @relation(fields: [evaluationId], references: [id])
+  utilisateur     Utilisateur      @relation(fields: [utilisateurId], references: [id])
+  evaluation      Evaluation       @relation(fields: [evaluationId], references: [id])
+  reponsesDonnees PassageReponse[]
 
   @@map("passage_evaluation")
+}
+
+// Detail des reponses choisies par l'utilisateur a une tentative donnee.
+// Ajoute par rapport au MLD initial pour permettre une correction detaillee.
+model PassageReponse {
+  id         Int @id @default(autoincrement()) @map("id_passage_reponse")
+  passageId  Int @map("id_passage")
+  questionId Int @map("id_question")
+  reponseId  Int @map("id_reponse")
+
+  passage  PassageEvaluation @relation(fields: [passageId], references: [id])
+  question Question          @relation(fields: [questionId], references: [id])
+  reponse  Reponse           @relation(fields: [reponseId], references: [id])
+
+  @@unique([passageId, reponseId])
+  @@map("passage_reponse")
 }
