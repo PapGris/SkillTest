@@ -7,6 +7,7 @@ import { PrismaModule } from './prisma/prisma.module.js';
 import { UsersModule } from './users/users.module.js';
 import { AuthModule } from './auth/auth.module.js';
 import { CompetencesModule } from './competences/competences.module.js';
+import { ParcoursModule } from './parcours/parcours.module.js';
 
 @Module({
   imports: [
@@ -16,6 +17,7 @@ import { CompetencesModule } from './competences/competences.module.js';
     UsersModule,
     AuthModule,
     CompetencesModule,
+    ParcoursModule,
   ],
   controllers: [AppController],
   providers: [AppService],
