@@ -1,0 +1,61 @@
+.conteneur-auth {
+  min-height: calc(100dvh - 72px);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: 2rem 1rem;
+  background: var(--couleur-fond-alt);
+}
+
+.carte-auth {
+  width: 100%;
+  max-width: 400px;
+  background: var(--couleur-fond);
+  border: 1px solid var(--couleur-bordure);
+  border-radius: var(--rayon);
+  box-shadow: var(--ombre);
+  padding: 2.5rem;
+  text-align: center;
+}
+
+h1 {
+  font-size: 1.5rem;
+  font-weight: 700;
+}
+
+.sous-titre {
+  margin-top: 0.5rem;
+  color: var(--couleur-texte-clair);
+  font-size: 0.95rem;
+  margin-bottom: 1.75rem;
+}
+
+.message-erreur {
+  margin-bottom: 1.25rem;
+}
+
+form {
+  display: flex;
+  flex-direction: column;
+  gap: 1.1rem;
+}
+
+.btn {
+  width: 100%;
+  margin-top: 0.5rem;
+}
+
+.lien-bas {
+  margin-top: 1.75rem;
+  font-size: 0.9rem;
+  color: var(--couleur-texte-clair);
+
+  a {
+    color: var(--couleur-primaire);
+    font-weight: 600;
+  }
+
+  a:hover {
+    text-decoration: underline;
+  }
+}

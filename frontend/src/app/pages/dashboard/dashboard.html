@@ -1,0 +1,11 @@
+<app-navbar />
+
+<main class="conteneur-tableau">
+  <h1>Bienvenue, {{ authService.currentUser()?.prenom }}</h1>
+  <p class="role-badge">{{ authService.currentUser()?.role }}</p>
+
+  <div class="carte-placeholder">
+    <p>Ton tableau de bord est en cours de construction.</p>
+    <p class="sous-texte">Bientot ici : tes competences, tes parcours et tes evaluations.</p>
+  </div>
+</main>

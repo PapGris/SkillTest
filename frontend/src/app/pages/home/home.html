@@ -1,0 +1,42 @@
+<app-navbar />
+
+<main class="accueil">
+  <section class="hero">
+    <div class="roue" [style.background]="conicGradient()">
+      @for (segment of segments; track segment.label; let i = $index) {
+        <div class="roue-segment" [style.--angle.deg]="angleSegment(i)">
+          <div class="roue-segment-contenu">
+            <span class="roue-icone" [class]="'icone-' + segment.icone" aria-hidden="true"></span>
+            <span class="roue-label">{{ segment.label }}</span>
+          </div>
+        </div>
+      }
+
+      <div class="roue-centre">
+        <h1>Prouve ce que tu vaux.<br /><span>(Vraiment.)</span></h1>
+        <p>
+          Evalue tes competences techniques et progresse avec des parcours personnalises.
+        </p>
+        <div class="roue-actions">
+          <a routerLink="/connexion" class="btn btn-primaire">Se connecter</a>
+          <a routerLink="/inscription" class="btn btn-secondaire">S'inscrire</a>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <section class="atouts" id="fonctionnalites">
+    <div class="atout">
+      <h3>Evaluations adaptatives</h3>
+      <p>Des quiz et simulations qui s'ajustent en fonction de tes resultats.</p>
+    </div>
+    <div class="atout">
+      <h3>Parcours personnalises</h3>
+      <p>Des parcours d'apprentissage batis autour de tes forces et de tes axes de progression.</p>
+    </div>
+    <div class="atout">
+      <h3>Suivi de progression</h3>
+      <p>Un tableau de bord pour suivre tes evaluations et ta montee en competences.</p>
+    </div>
+  </section>
+</main>

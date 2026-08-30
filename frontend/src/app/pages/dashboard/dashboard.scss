@@ -1,0 +1,35 @@
+.conteneur-tableau {
+  max-width: 900px;
+  margin: 0 auto;
+  padding: 3rem 1.5rem;
+}
+
+h1 {
+  font-size: 1.9rem;
+  font-weight: 700;
+}
+
+.role-badge {
+  display: inline-block;
+  margin-top: 0.5rem;
+  padding: 0.3rem 0.8rem;
+  border-radius: 999px;
+  background: color-mix(in srgb, var(--couleur-primaire) 12%, transparent);
+  color: var(--couleur-primaire);
+  font-size: 0.85rem;
+  font-weight: 600;
+}
+
+.carte-placeholder {
+  margin-top: 2.5rem;
+  padding: 2.5rem;
+  border: 1px dashed var(--couleur-bordure);
+  border-radius: var(--rayon);
+  text-align: center;
+  color: var(--couleur-texte-clair);
+}
+
+.sous-texte {
+  margin-top: 0.5rem;
+  font-size: 0.9rem;
+}

@@ -1,0 +1,38 @@
+<app-navbar />
+
+<main class="conteneur-auth">
+  <div class="carte-auth">
+    <h1>Connexion</h1>
+    <p class="sous-titre">Content de te revoir. Connecte-toi pour continuer.</p>
+
+    @if (erreur()) {
+      <p class="message-erreur">{{ erreur() }}</p>
+    }
+
+    <form [formGroup]="formulaire" (ngSubmit)="soumettre()">
+      <div class="champ">
+        <label for="email">Email</label>
+        <input id="email" type="email" formControlName="email" autocomplete="email" placeholder="toi@exemple.fr" />
+        @if (formulaire.controls.email.invalid && formulaire.controls.email.touched) {
+          <span class="erreur-champ">Email invalide</span>
+        }
+      </div>
+
+      <div class="champ">
+        <label for="motDePasse">Mot de passe</label>
+        <input id="motDePasse" type="password" formControlName="motDePasse" autocomplete="current-password" placeholder="********" />
+        @if (formulaire.controls.motDePasse.invalid && formulaire.controls.motDePasse.touched) {
+          <span class="erreur-champ">Mot de passe requis</span>
+        }
+      </div>
+
+      <button type="submit" class="btn btn-primaire" [disabled]="enCours()">
+        {{ enCours() ? 'Connexion...' : 'Se connecter' }}
+      </button>
+    </form>
+
+    <p class="lien-bas">
+      Pas encore de compte ? <a routerLink="/inscription">Inscris-toi</a>
+    </p>
+  </div>
+</main>

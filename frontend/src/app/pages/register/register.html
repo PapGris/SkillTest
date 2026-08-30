@@ -1,0 +1,54 @@
+<app-navbar />
+
+<main class="conteneur-auth">
+  <div class="carte-auth">
+    <h1>Creer un compte</h1>
+    <p class="sous-titre">Inscris-toi pour commencer a evaluer tes competences.</p>
+
+    @if (erreur()) {
+      <p class="message-erreur">{{ erreur() }}</p>
+    }
+
+    <form [formGroup]="formulaire" (ngSubmit)="soumettre()">
+      <div class="champ">
+        <label for="prenom">Prenom</label>
+        <input id="prenom" type="text" formControlName="prenom" autocomplete="given-name" placeholder="Jean" />
+        @if (formulaire.controls.prenom.invalid && formulaire.controls.prenom.touched) {
+          <span class="erreur-champ">Prenom requis</span>
+        }
+      </div>
+
+      <div class="champ">
+        <label for="nom">Nom</label>
+        <input id="nom" type="text" formControlName="nom" autocomplete="family-name" placeholder="Dupont" />
+        @if (formulaire.controls.nom.invalid && formulaire.controls.nom.touched) {
+          <span class="erreur-champ">Nom requis</span>
+        }
+      </div>
+
+      <div class="champ">
+        <label for="email">Email</label>
+        <input id="email" type="email" formControlName="email" autocomplete="email" placeholder="toi@exemple.fr" />
+        @if (formulaire.controls.email.invalid && formulaire.controls.email.touched) {
+          <span class="erreur-champ">Email invalide</span>
+        }
+      </div>
+
+      <div class="champ">
+        <label for="motDePasse">Mot de passe</label>
+        <input id="motDePasse" type="password" formControlName="motDePasse" autocomplete="new-password" placeholder="6 caracteres minimum" />
+        @if (formulaire.controls.motDePasse.invalid && formulaire.controls.motDePasse.touched) {
+          <span class="erreur-champ">6 caracteres minimum</span>
+        }
+      </div>
+
+      <button type="submit" class="btn btn-primaire" [disabled]="enCours()">
+        {{ enCours() ? 'Creation...' : 'Creer mon compte' }}
+      </button>
+    </form>
+
+    <p class="lien-bas">
+      Deja un compte ? <a routerLink="/connexion">Connecte-toi</a>
+    </p>
+  </div>
+</main>

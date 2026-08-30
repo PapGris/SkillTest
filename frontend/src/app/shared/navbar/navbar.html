@@ -1,0 +1,27 @@
+<header class="navbar">
+  <a routerLink="/" class="logo">
+    <span class="logo-badge">S</span>
+    <span class="logo-texte">SkillTest</span>
+  </a>
+
+  <nav class="liens">
+    <a href="#fonctionnalites" title="Bientot disponible">Fonctionnalites</a>
+    <a href="#temoignages" title="Bientot disponible">Temoignages</a>
+    <a href="#aide" title="Bientot disponible">Aide</a>
+  </nav>
+
+  @if (auth.isAuthenticated()) {
+    <div class="zone-compte">
+      <a routerLink="/tableau-de-bord" class="lien-tableau-de-bord">
+        {{ auth.currentUser()?.prenom }}
+        <span class="badge-role">{{ auth.currentUser()?.role }}</span>
+      </a>
+      <button type="button" class="btn btn-secondaire" (click)="deconnexion()">Deconnexion</button>
+    </div>
+  } @else {
+    <div class="zone-compte">
+      <a routerLink="/connexion" class="btn btn-secondaire">Se connecter</a>
+      <a routerLink="/inscription" class="btn btn-primaire">S'inscrire</a>
+    </div>
+  }
+</header>

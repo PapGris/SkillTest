@@ -1,0 +1,75 @@
+.navbar {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 2rem;
+  padding: 1rem 2rem;
+  border-bottom: 1px solid var(--couleur-bordure);
+  background: var(--couleur-fond);
+}
+
+.logo {
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+  font-weight: 700;
+  font-size: 1.1rem;
+  color: var(--couleur-texte);
+}
+
+.logo-badge {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  width: 2rem;
+  height: 2rem;
+  border-radius: 50%;
+  background: var(--couleur-primaire);
+  color: #fff;
+  font-weight: 800;
+}
+
+.liens {
+  display: flex;
+  gap: 1.75rem;
+  flex: 1;
+  justify-content: center;
+
+  a {
+    color: var(--couleur-texte-clair);
+    font-size: 0.9rem;
+    font-weight: 500;
+
+    &:hover {
+      color: var(--couleur-texte);
+    }
+  }
+
+  @media (max-width: 720px) {
+    display: none;
+  }
+}
+
+.zone-compte {
+  display: flex;
+  align-items: center;
+  gap: 0.75rem;
+}
+
+.lien-tableau-de-bord {
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+  font-weight: 600;
+  font-size: 0.9rem;
+}
+
+.badge-role {
+  font-size: 0.7rem;
+  font-weight: 600;
+  padding: 0.15rem 0.5rem;
+  border-radius: 999px;
+  background: var(--couleur-fond-alt);
+  color: var(--couleur-texte-clair);
+  border: 1px solid var(--couleur-bordure);
+}
