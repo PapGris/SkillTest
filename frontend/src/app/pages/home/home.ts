@@ -1,6 +1,7 @@
-import { Component } from '@angular/core';
+import { Component, inject } from '@angular/core';
 import { RouterLink } from '@angular/router';
 import { Navbar } from '../../shared/navbar/navbar';
+import { AuthService } from '../../core/auth/auth.service';
 
 interface SegmentRoue {
   label: string;
@@ -15,6 +16,8 @@ interface SegmentRoue {
   styleUrl: './home.scss',
 })
 export class Home {
+  protected readonly authService = inject(AuthService);
+
   protected readonly segments: SegmentRoue[] = [
     { label: 'Front-end', couleur: '#22c55e', icone: 'code' },
     { label: 'Sécurité', couleur: '#ef4444', icone: 'bouclier' },

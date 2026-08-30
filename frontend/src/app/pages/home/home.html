@@ -18,8 +18,12 @@
           Evalue tes competences techniques et progresse avec des parcours personnalises.
         </p>
         <div class="roue-actions">
-          <a routerLink="/connexion" class="btn btn-primaire">Se connecter</a>
-          <a routerLink="/inscription" class="btn btn-secondaire">S'inscrire</a>
+          @if (authService.isAuthenticated()) {
+            <a routerLink="/tableau-de-bord" class="btn btn-primaire">Mon tableau de bord</a>
+          } @else {
+            <a routerLink="/connexion" class="btn btn-primaire">Se connecter</a>
+            <a routerLink="/inscription" class="btn btn-secondaire">S'inscrire</a>
+          }
         </div>
       </div>
     </div>
