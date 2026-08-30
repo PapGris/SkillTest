@@ -2,7 +2,7 @@ import { BadRequestException, ForbiddenException, Injectable, NotFoundException 
 import { PrismaService } from '../prisma/prisma.service.js';
 import type { PasserEvaluationDto } from './dto/passer-evaluation.dto.js';
 
-interface DetailQuestion {
+export interface DetailQuestion {
   questionId: number;
   enonce: string;
   pointsPossibles: number;
