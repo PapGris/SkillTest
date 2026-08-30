@@ -1,0 +1,125 @@
+// Schema Prisma - genere a partir du MLD fourni (Role, Utilisateur, Parcours,
+// Evaluation, Competence, Competence_Utilisateur, Question, Reponse, Passage_Evaluation)
+// A VALIDER ENSEMBLE avant la premiere migration.
+
+generator client {
+  provider = "prisma-client-js"
+}
+
+datasource db {
+  provider = "mysql"
+  url      = env("DATABASE_URL")
+}
+
+model Role {
+  id           Int           @id @default(autoincrement()) @map("id_role")
+  nomRole      String        @map("nom_role") @db.VarChar(50)
+  utilisateurs Utilisateur[]
+
+  @@map("role")
+}
+
+model Utilisateur {
+  id         Int      @id @default(autoincrement()) @map("id_utilisateur")
+  nom        String   @db.VarChar(100)
+  prenom     String   @db.VarChar(100)
+  email      String   @unique @db.VarChar(150)
+  motDePasse String   @map("mot_de_passe") @db.VarChar(255)
+  roleId     Int      @map("id_role")
+  createdAt  DateTime @default(now()) @map("created_at")
+
+  role               Role                     @relation(fields: [roleId], references: [id])
+  parcoursCrees      Parcours[]               @relation("ParcoursCreateur")
+  competences        CompetenceUtilisateur[]
+  passages           PassageEvaluation[]
+
+  @@map("utilisateur")
+}
+
+model Parcours {
+  id          Int     @id @default(autoincrement()) @map("id_parcours")
+  titre       String  @db.VarChar(150)
+  description String? @db.Text
+  createurId  Int     @map("id_createur")
+
+  createur    Utilisateur  @relation("ParcoursCreateur", fields: [createurId], references: [id])
+  evaluations Evaluation[]
+
+  @@map("parcours")
+}
+
+model Evaluation {
+  id             Int    @id @default(autoincrement()) @map("id_evaluation")
+  titre          String @db.VarChar(150)
+  typeEvaluation String @map("type_evaluation") @db.VarChar(50)
+  parcoursId     Int    @map("id_parcours")
+
+  parcours  Parcours            @relation(fields: [parcoursId], references: [id])
+  questions Question[]
+  passages  PassageEvaluation[]
+
+  @@map("evaluation")
+}
+
+model Competence {
+  id            Int     @id @default(autoincrement()) @map("id_competence")
+  nomCompetence String  @map("nom_competence") @db.VarChar(100)
+  description   String? @db.Text
+
+  utilisateurs CompetenceUtilisateur[]
+  questions    Question[]
+
+  @@map("competence")
+}
+
+// Entite association Utilisateur <-> Competence (auto-evaluation de niveau)
+model CompetenceUtilisateur {
+  utilisateurId Int @map("id_utilisateur")
+  competenceId  Int @map("id_competence")
+  niveauEstime  Int @map("niveau_estime")
+
+  utilisateur Utilisateur @relation(fields: [utilisateurId], references: [id])
+  competence  Competence  @relation(fields: [competenceId], references: [id])
+
+  @@id([utilisateurId, competenceId])
+  @@map("competence_utilisateur")
+}
+
+model Question {
+  id           Int     @id @default(autoincrement()) @map("id_question")
+  enonce       String  @db.Text
+  points       Int
+  evaluationId Int     @map("id_evaluation")
+  competenceId Int?    @map("id_competence")
+
+  evaluation Evaluation  @relation(fields: [evaluationId], references: [id])
+  competence Competence? @relation(fields: [competenceId], references: [id])
+  reponses   Reponse[]
+
+  @@map("question")
+}
+
+model Reponse {
+  id           Int     @id @default(autoincrement()) @map("id_reponse")
+  texteReponse String  @map("texte_reponse") @db.VarChar(255)
+  estCorrecte  Boolean @map("est_correcte")
+  questionId   Int     @map("id_question")
+
+  question Question @relation(fields: [questionId], references: [id])
+
+  @@map("reponse")
+}
+
+// Entite association Utilisateur <-> Evaluation : historique des tentatives
+model PassageEvaluation {
+  id            Int      @id @default(autoincrement()) @map("id_passage")
+  scoreObtenu   Float    @map("score_obtenu")
+  datePassage   DateTime @default(now()) @map("date_passage")
+  utilisateurId Int      @map("id_utilisateur")
+  evaluationId  Int      @map("id_evaluation")
+
+  utilisateur Utilisateur @relation(fields: [utilisateurId], references: [id])
+  evaluation  Evaluation  @relation(fields: [evaluationId], references: [id])
+
+  @@map("passage_evaluation")
+}
