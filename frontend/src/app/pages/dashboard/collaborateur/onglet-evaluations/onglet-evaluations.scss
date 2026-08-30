@@ -1,0 +1,57 @@
+.etat {
+  color: var(--couleur-texte-clair);
+  font-size: 0.9rem;
+  padding: 1rem 0;
+}
+
+.grille-evaluations {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(240px, 1fr));
+  gap: 1rem;
+}
+
+.carte-evaluation {
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+  gap: 0.5rem;
+  background: var(--couleur-fond);
+  border: 1px solid var(--couleur-bordure);
+  border-radius: var(--rayon);
+  padding: 1.25rem;
+}
+
+.type-badge {
+  display: inline-block;
+  padding: 0.2rem 0.6rem;
+  border-radius: 999px;
+  background: color-mix(in srgb, var(--couleur-primaire) 12%, transparent);
+  color: var(--couleur-primaire);
+  font-size: 0.72rem;
+  font-weight: 700;
+  text-transform: uppercase;
+}
+
+h3 {
+  font-size: 1rem;
+  font-weight: 700;
+}
+
+.parcours,
+.nb-questions {
+  font-size: 0.82rem;
+  color: var(--couleur-texte-clair);
+}
+
+.btn {
+  margin-top: 0.5rem;
+  font-size: 0.82rem;
+  padding: 0.5rem 1rem;
+}
+
+.indisponible {
+  margin-top: 0.5rem;
+  font-size: 0.8rem;
+  color: var(--couleur-texte-clair);
+  font-style: italic;
+}

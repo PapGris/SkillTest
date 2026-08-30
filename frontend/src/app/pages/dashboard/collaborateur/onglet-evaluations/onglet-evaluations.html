@@ -1,0 +1,26 @@
+@if (chargement()) {
+  <p class="etat">Chargement des evaluations...</p>
+} @else if (erreur()) {
+  <p class="message-erreur">{{ erreur() }}</p>
+} @else if (evaluations().length === 0) {
+  <p class="etat">Aucune evaluation disponible pour le moment.</p>
+} @else {
+  <div class="grille-evaluations">
+    @for (evaluation of evaluations(); track evaluation.id) {
+      <div class="carte-evaluation">
+        <span class="type-badge">{{ evaluation.typeEvaluation }}</span>
+        <h3>{{ evaluation.titre }}</h3>
+        <p class="parcours">Parcours : {{ evaluation.parcours.titre }}</p>
+        <p class="nb-questions">{{ evaluation._count.questions }} question{{ evaluation._count.questions > 1 ? 's' : '' }}</p>
+
+        @if (evaluation._count.questions > 0) {
+          <a [routerLink]="['/evaluations', evaluation.id, 'passer']" class="btn btn-primaire">
+            Passer cette evaluation
+          </a>
+        } @else {
+          <span class="indisponible">Pas encore de questions</span>
+        }
+      </div>
+    }
+  </div>
+}

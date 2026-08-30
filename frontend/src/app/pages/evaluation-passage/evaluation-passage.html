@@ -1,0 +1,72 @@
+<app-navbar />
+
+<main class="conteneur">
+  <a routerLink="/tableau-de-bord" class="lien-retour">&larr; Retour au tableau de bord</a>
+
+  @if (chargement()) {
+    <p class="etat">Chargement de l'evaluation...</p>
+  } @else if (erreur() && !evaluation()) {
+    <p class="message-erreur">{{ erreur() }}</p>
+  } @else if (evaluation(); as evaluationChargee) {
+    <h1>{{ evaluationChargee.titre }}</h1>
+    <p class="sous-titre">{{ evaluationChargee.typeEvaluation }} — {{ evaluationChargee.questions.length }} question(s)</p>
+
+    @if (resultat(); as res) {
+      <div class="carte-score">
+        <p class="score">{{ res.scoreObtenu }} / {{ res.scoreMax }} points</p>
+      </div>
+
+      <div class="liste-correction">
+        @for (question of res.detail; track question.questionId) {
+          <div class="carte-question" [class.correcte]="question.correcte" [class.incorrecte]="!question.correcte">
+            <p class="enonce">
+              {{ question.enonce }}
+              <span class="points">({{ question.pointsObtenus }}/{{ question.pointsPossibles }} pts)</span>
+            </p>
+            <ul class="options">
+              @for (option of optionsDe(question.questionId); track option.id) {
+                <li
+                  [class.bonne]="estBonneReponse(question, option.id)"
+                  [class.choisie]="estReponseChoisie(question, option.id)"
+                >
+                  {{ option.texteReponse }}
+                </li>
+              }
+            </ul>
+          </div>
+        }
+      </div>
+
+      <a routerLink="/tableau-de-bord" class="btn btn-primaire">Retour au tableau de bord</a>
+    } @else {
+      @if (erreur()) {
+        <p class="message-erreur">{{ erreur() }}</p>
+      }
+
+      <form (ngSubmit)="soumettre()">
+        @for (question of evaluationChargee.questions; track question.id) {
+          <fieldset class="carte-question">
+            <legend>
+              {{ question.enonce }}
+              <span class="points">({{ question.points }} pt{{ question.points > 1 ? 's' : '' }})</span>
+            </legend>
+            @for (option of question.reponses; track option.id) {
+              <label class="option">
+                <input
+                  type="checkbox"
+                  [checked]="estCochee(question.id, option.id)"
+                  (change)="basculerReponse(question.id, option.id)"
+                />
+                {{ option.texteReponse }}
+              </label>
+            }
+          </fieldset>
+        }
+
+        <button type="submit" class="btn btn-primaire" [disabled]="envoiEnCours()">
+          {{ envoiEnCours() ? 'Envoi...' : 'Valider mes reponses' }}
+        </button>
+      </form>
+    }
+  }
+</main>

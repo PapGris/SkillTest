@@ -1,0 +1,73 @@
+.etat {
+  color: var(--couleur-texte-clair);
+  font-size: 0.9rem;
+  padding: 1rem 0;
+}
+
+.liste-competences {
+  display: flex;
+  flex-direction: column;
+  gap: 0.75rem;
+}
+
+.carte-competence {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 1.5rem;
+  flex-wrap: wrap;
+  background: var(--couleur-fond);
+  border: 1px solid var(--couleur-bordure);
+  border-radius: var(--rayon);
+  padding: 1.1rem 1.4rem;
+}
+
+.info {
+  h3 {
+    font-size: 1rem;
+    font-weight: 700;
+  }
+
+  .description {
+    margin-top: 0.2rem;
+    font-size: 0.82rem;
+    color: var(--couleur-texte-clair);
+  }
+
+  .niveau-actuel {
+    margin-top: 0.4rem;
+    font-size: 0.85rem;
+    color: var(--couleur-texte-clair);
+
+    strong {
+      color: var(--couleur-primaire);
+    }
+  }
+}
+
+.edition {
+  display: flex;
+  align-items: center;
+  gap: 0.6rem;
+  flex-wrap: wrap;
+}
+
+.champ-select {
+  padding: 0.5rem 0.7rem;
+  border-radius: var(--rayon);
+  border: 1px solid var(--couleur-bordure);
+  font-size: 0.85rem;
+  background: var(--couleur-fond);
+}
+
+.btn {
+  font-size: 0.82rem;
+  padding: 0.5rem 1rem;
+  white-space: nowrap;
+}
+
+.confirmation {
+  font-size: 0.82rem;
+  color: var(--couleur-succes);
+  font-weight: 600;
+}

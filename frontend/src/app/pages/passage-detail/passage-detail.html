@@ -1,0 +1,43 @@
+<app-navbar />
+
+<main class="conteneur">
+  <a routerLink="/tableau-de-bord" class="lien-retour">&larr; Retour au tableau de bord</a>
+
+  @if (chargement()) {
+    <p class="etat">Chargement...</p>
+  } @else if (erreur()) {
+    <p class="message-erreur">{{ erreur() }}</p>
+  } @else if (passage(); as p) {
+    <h1>{{ p.evaluation.titre }}</h1>
+    <p class="sous-titre">Tentative du {{ p.datePassage | date: 'dd/MM/yyyy à HH:mm' }}</p>
+
+    <div class="carte-score">
+      <p class="score">{{ p.scoreObtenu }} / {{ p.scoreMax }} points</p>
+    </div>
+
+    <div class="liste-correction">
+      @for (question of p.detail; track question.questionId) {
+        <div class="carte-question" [class.correcte]="question.correcte" [class.incorrecte]="!question.correcte">
+          <p class="enonce">
+            {{ question.enonce }}
+            <span class="points">({{ question.pointsObtenus }}/{{ question.pointsPossibles }} pts)</span>
+          </p>
+          <p class="ligne-reponse">
+            <strong>Bonne(s) reponse(s) :</strong>
+            @if (question.reponsesCorrectes.length > 0) {
+              {{ joindre(question.reponsesCorrectes) }}
+            }
+          </p>
+          <p class="ligne-reponse">
+            <strong>Ta/tes reponse(s) :</strong>
+            @if (question.reponsesChoisies.length > 0) {
+              {{ joindre(question.reponsesChoisies) }}
+            } @else {
+              <em>Aucune reponse donnee</em>
+            }
+          </p>
+        </div>
+      }
+    </div>
+  }
+</main>

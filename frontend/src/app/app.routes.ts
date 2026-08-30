@@ -23,6 +23,17 @@ export const routes: Routes = [
     loadComponent: () => import('./pages/dashboard/dashboard').then((m) => m.Dashboard),
   },
   {
+    path: 'evaluations/:id/passer',
+    canActivate: [authGuard],
+    loadComponent: () =>
+      import('./pages/evaluation-passage/evaluation-passage').then((m) => m.EvaluationPassage),
+  },
+  {
+    path: 'mes-passages/:id',
+    canActivate: [authGuard],
+    loadComponent: () => import('./pages/passage-detail/passage-detail').then((m) => m.PassageDetail),
+  },
+  {
     path: '**',
     redirectTo: '',
   },

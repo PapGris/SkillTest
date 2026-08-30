@@ -1,0 +1,40 @@
+<nav class="onglets">
+  <button
+    type="button"
+    class="onglet"
+    [class.actif]="ongletActif() === 'evaluations'"
+    (click)="choisirOnglet('evaluations')"
+  >
+    Evaluations disponibles
+  </button>
+  <button
+    type="button"
+    class="onglet"
+    [class.actif]="ongletActif() === 'competences'"
+    (click)="choisirOnglet('competences')"
+  >
+    Mes competences
+  </button>
+  <button
+    type="button"
+    class="onglet"
+    [class.actif]="ongletActif() === 'historique'"
+    (click)="choisirOnglet('historique')"
+  >
+    Mon historique
+  </button>
+</nav>
+
+<div class="contenu-onglet">
+  @switch (ongletActif()) {
+    @case ('evaluations') {
+      <app-onglet-evaluations />
+    }
+    @case ('competences') {
+      <app-onglet-competences />
+    }
+    @case ('historique') {
+      <app-onglet-historique />
+    }
+  }
+</div>

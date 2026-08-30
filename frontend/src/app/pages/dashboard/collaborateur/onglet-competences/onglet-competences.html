@@ -1,0 +1,48 @@
+@if (chargement()) {
+  <p class="etat">Chargement de tes competences...</p>
+} @else if (erreur()) {
+  <p class="message-erreur">{{ erreur() }}</p>
+} @else if (lignes().length === 0) {
+  <p class="etat">Aucune competence n'est encore definie.</p>
+} @else {
+  <div class="liste-competences">
+    @for (ligne of lignes(); track ligne.id) {
+      <div class="carte-competence">
+        <div class="info">
+          <h3>{{ ligne.nomCompetence }}</h3>
+          @if (ligne.description) {
+            <p class="description">{{ ligne.description }}</p>
+          }
+          <p class="niveau-actuel">
+            @if (ligne.niveauEnregistre !== null) {
+              Ton niveau actuel : <strong>{{ ligne.niveauEnregistre }}/5</strong>
+            } @else {
+              <em>Pas encore auto-evaluee</em>
+            }
+          </p>
+        </div>
+
+        <div class="edition">
+          <select [(ngModel)]="ligne.niveauChoisi" class="champ-select">
+            <option [ngValue]="1">1 - Debutant</option>
+            <option [ngValue]="2">2 - Notions</option>
+            <option [ngValue]="3">3 - Intermediaire</option>
+            <option [ngValue]="4">4 - Avance</option>
+            <option [ngValue]="5">5 - Expert</option>
+          </select>
+          <button
+            type="button"
+            class="btn btn-secondaire"
+            [disabled]="ligneEnCoursId() === ligne.id || ligne.niveauChoisi === ligne.niveauEnregistre"
+            (click)="enregistrer(ligne)"
+          >
+            {{ ligneEnCoursId() === ligne.id ? 'Enregistrement...' : 'Enregistrer' }}
+          </button>
+          @if (ligneEnregistreeId() === ligne.id) {
+            <span class="confirmation">Enregistre !</span>
+          }
+        </div>
+      </div>
+    }
+  </div>
+}

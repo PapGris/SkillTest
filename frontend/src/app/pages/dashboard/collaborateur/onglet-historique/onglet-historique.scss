@@ -1,0 +1,46 @@
+.etat {
+  color: var(--couleur-texte-clair);
+  font-size: 0.9rem;
+  padding: 1rem 0;
+}
+
+.liste-passages {
+  display: flex;
+  flex-direction: column;
+  gap: 0.6rem;
+}
+
+.ligne-passage {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 1rem;
+  background: var(--couleur-fond);
+  border: 1px solid var(--couleur-bordure);
+  border-radius: var(--rayon);
+  padding: 1rem 1.25rem;
+  transition: border-color 0.15s ease;
+
+  &:hover {
+    border-color: var(--couleur-primaire);
+  }
+}
+
+.info {
+  h3 {
+    font-size: 0.95rem;
+    font-weight: 700;
+  }
+
+  .date {
+    margin-top: 0.2rem;
+    font-size: 0.78rem;
+    color: var(--couleur-texte-clair);
+  }
+}
+
+.score {
+  font-weight: 700;
+  color: var(--couleur-primaire);
+  white-space: nowrap;
+}

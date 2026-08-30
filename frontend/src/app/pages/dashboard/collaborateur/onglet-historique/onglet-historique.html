@@ -1,0 +1,19 @@
+@if (chargement()) {
+  <p class="etat">Chargement de ton historique...</p>
+} @else if (erreur()) {
+  <p class="message-erreur">{{ erreur() }}</p>
+} @else if (passages().length === 0) {
+  <p class="etat">Tu n'as encore passe aucune evaluation.</p>
+} @else {
+  <div class="liste-passages">
+    @for (passage of passages(); track passage.id) {
+      <a [routerLink]="['/mes-passages', passage.id]" class="ligne-passage">
+        <div class="info">
+          <h3>{{ passage.evaluation.titre }}</h3>
+          <p class="date">{{ passage.datePassage | date: 'dd/MM/yyyy à HH:mm' }}</p>
+        </div>
+        <div class="score">{{ passage.scoreObtenu }} pts</div>
+      </a>
+    }
+  </div>
+}

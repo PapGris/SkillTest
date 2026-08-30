@@ -4,8 +4,12 @@
   <h1>Bienvenue, {{ authService.currentUser()?.prenom }}</h1>
   <p class="role-badge">{{ authService.currentUser()?.role }}</p>
 
-  <div class="carte-placeholder">
-    <p>Ton tableau de bord est en cours de construction.</p>
-    <p class="sous-texte">Bientot ici : tes competences, tes parcours et tes evaluations.</p>
-  </div>
+  @if (authService.hasRole('Collaborateur')) {
+    <app-dashboard-collaborateur />
+  } @else {
+    <div class="carte-placeholder">
+      <p>Ton tableau de bord est en cours de construction.</p>
+      <p class="sous-texte">Bientot ici : gestion des parcours, des competences et rapports d'equipe.</p>
+    </div>
+  }
 </main>

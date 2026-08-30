@@ -1,0 +1,140 @@
+.conteneur {
+  max-width: 720px;
+  margin: 0 auto;
+  padding: 2.5rem 1.5rem 4rem;
+}
+
+.lien-retour {
+  display: inline-block;
+  font-size: 0.85rem;
+  color: var(--couleur-texte-clair);
+  margin-bottom: 1.5rem;
+
+  &:hover {
+    color: var(--couleur-primaire);
+  }
+}
+
+.etat {
+  color: var(--couleur-texte-clair);
+  font-size: 0.9rem;
+}
+
+h1 {
+  font-size: 1.6rem;
+  font-weight: 700;
+}
+
+.sous-titre {
+  margin-top: 0.3rem;
+  color: var(--couleur-texte-clair);
+  font-size: 0.9rem;
+  margin-bottom: 2rem;
+}
+
+.carte-score {
+  background: color-mix(in srgb, var(--couleur-primaire) 8%, transparent);
+  border: 1px solid var(--couleur-primaire);
+  border-radius: var(--rayon);
+  padding: 1.25rem;
+  text-align: center;
+  margin-bottom: 1.5rem;
+
+  .score {
+    font-size: 1.4rem;
+    font-weight: 800;
+    color: var(--couleur-primaire);
+  }
+}
+
+.liste-correction {
+  display: flex;
+  flex-direction: column;
+  gap: 1rem;
+  margin-bottom: 2rem;
+}
+
+.carte-question {
+  background: var(--couleur-fond);
+  border: 1px solid var(--couleur-bordure);
+  border-radius: var(--rayon);
+  padding: 1.25rem 1.4rem;
+
+  &.correcte {
+    border-color: var(--couleur-succes);
+  }
+
+  &.incorrecte {
+    border-color: var(--couleur-danger);
+  }
+}
+
+.enonce,
+legend {
+  font-weight: 600;
+  font-size: 0.95rem;
+  margin-bottom: 0.75rem;
+  padding: 0;
+}
+
+.points {
+  font-weight: 400;
+  color: var(--couleur-texte-clair);
+  font-size: 0.82rem;
+}
+
+.options {
+  list-style: none;
+  display: flex;
+  flex-direction: column;
+  gap: 0.4rem;
+
+  li {
+    padding: 0.5rem 0.75rem;
+    border-radius: var(--rayon);
+    border: 1px solid var(--couleur-bordure);
+    font-size: 0.88rem;
+
+    &.bonne {
+      border-color: var(--couleur-succes);
+      background: color-mix(in srgb, var(--couleur-succes) 8%, transparent);
+    }
+
+    &.choisie:not(.bonne) {
+      border-color: var(--couleur-danger);
+      background: color-mix(in srgb, var(--couleur-danger) 8%, transparent);
+    }
+
+    &.choisie.bonne::after {
+      content: ' ✓ ta reponse';
+      font-size: 0.75rem;
+      color: var(--couleur-succes);
+    }
+
+    &.choisie:not(.bonne)::after {
+      content: ' ✗ ta reponse';
+      font-size: 0.75rem;
+      color: var(--couleur-danger);
+    }
+  }
+}
+
+.option {
+  display: flex;
+  align-items: center;
+  gap: 0.6rem;
+  padding: 0.4rem 0;
+  font-size: 0.9rem;
+  cursor: pointer;
+}
+
+form {
+  display: flex;
+  flex-direction: column;
+  gap: 1rem;
+}
+
+.btn {
+  align-self: flex-start;
+  margin-top: 0.5rem;
+}
