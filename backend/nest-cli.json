@@ -3,12 +3,6 @@
   "collection": "@nestjs/schematics",
   "sourceRoot": "src",
   "compilerOptions": {
-    "deleteOutDir": true,
-    "watchOptions": {
-      "watchFile": "fixedPollingInterval",
-      "watchDirectory": "fixedPollingInterval",
-      "fallbackPolling": "fixedPollingInterval",
-      "interval": 1000
-    }
+    "deleteOutDir": true
   }
 }
