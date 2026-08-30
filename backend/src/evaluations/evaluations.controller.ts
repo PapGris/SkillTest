@@ -17,6 +17,7 @@ import { CreateQuestionDto } from './dto/create-question.dto.js';
 import { JwtAuthGuard } from '../common/guards/jwt-auth.guard.js';
 import { RolesGuard } from '../common/guards/roles.guard.js';
 import { Roles } from '../common/decorators/roles.decorator.js';
+import { CurrentUser, type AuthenticatedUser } from '../common/decorators/current-user.decorator.js';
 
 const GESTIONNAIRES = ['Manager', 'Responsable RH'];
 
@@ -31,8 +32,8 @@ export class EvaluationsController {
   }
 
   @Get(':id')
-  findOne(@Param('id', ParseIntPipe) id: number) {
-    return this.evaluationsService.findOne(id);
+  findOne(@Param('id', ParseIntPipe) id: number, @CurrentUser() user: AuthenticatedUser) {
+    return this.evaluationsService.findOne(id, user.role);
   }
 
   @UseGuards(RolesGuard)

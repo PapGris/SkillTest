@@ -26,7 +26,7 @@ export class EvaluationsService {
     });
   }
 
-  async findOne(id: number) {
+  async findOne(id: number, roleAppelant?: string) {
     const evaluation = await this.prisma.evaluation.findUnique({
       where: { id },
       include: INCLUDE_QUESTIONS_REPONSES,
@@ -34,6 +34,21 @@ export class EvaluationsService {
     if (!evaluation) {
       throw new NotFoundException(`Evaluation ${id} introuvable`);
     }
+
+    // Un Collaborateur qui consulte l'evaluation pour la passer ne doit jamais recevoir
+    // le flag estCorrecte : sinon la bonne reponse est visible dans la reponse HTTP
+    // avant meme d'avoir repondu (fuite via les DevTools du navigateur).
+    const estGestionnaire = roleAppelant === 'Manager' || roleAppelant === 'Responsable RH';
+    if (!estGestionnaire) {
+      return {
+        ...evaluation,
+        questions: evaluation.questions.map((question) => ({
+          ...question,
+          reponses: question.reponses.map(({ estCorrecte, ...reste }) => reste),
+        })),
+      };
+    }
+
     return evaluation;
   }
 

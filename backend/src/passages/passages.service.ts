@@ -2,14 +2,19 @@ import { BadRequestException, ForbiddenException, Injectable, NotFoundException 
 import { PrismaService } from '../prisma/prisma.service.js';
 import type { PasserEvaluationDto } from './dto/passer-evaluation.dto.js';
 
+export interface ReponseDetail {
+  id: number;
+  texte: string;
+}
+
 export interface DetailQuestion {
   questionId: number;
   enonce: string;
   pointsPossibles: number;
   pointsObtenus: number;
   correcte: boolean;
-  reponsesChoisies: number[];
-  reponsesCorrectes: number[];
+  reponsesChoisies: ReponseDetail[];
+  reponsesCorrectes: ReponseDetail[];
 }
 
 @Injectable()
@@ -51,6 +56,7 @@ export class PassagesService {
     for (const question of evaluation.questions) {
       scoreMax += question.points;
 
+      const reponsesParId = new Map(question.reponses.map((r) => [r.id, r] as const));
       const idsCorrects = question.reponses.filter((r) => r.estCorrecte).map((r) => r.id).sort((a, b) => a - b);
       const idsChoisis = (reponsesParQuestion.get(question.id) ?? []).slice().sort((a, b) => a - b);
       const estCorrecte =
@@ -66,8 +72,8 @@ export class PassagesService {
         pointsPossibles: question.points,
         pointsObtenus: estCorrecte ? question.points : 0,
         correcte: estCorrecte,
-        reponsesChoisies: idsChoisis,
-        reponsesCorrectes: idsCorrects,
+        reponsesChoisies: idsChoisis.map((id) => ({ id, texte: reponsesParId.get(id)!.texteReponse })),
+        reponsesCorrectes: idsCorrects.map((id) => ({ id, texte: reponsesParId.get(id)!.texteReponse })),
       });
 
       for (const reponseId of idsChoisis) {
@@ -138,6 +144,7 @@ export class PassagesService {
     const detail: DetailQuestion[] = [];
     for (const question of passage.evaluation.questions) {
       scoreMax += question.points;
+      const reponsesParId = new Map(question.reponses.map((r) => [r.id, r] as const));
       const idsCorrects = question.reponses.filter((r) => r.estCorrecte).map((r) => r.id).sort((a, b) => a - b);
       const idsChoisis = passage.reponsesDonnees
         .filter((rd) => rd.questionId === question.id)
@@ -151,8 +158,8 @@ export class PassagesService {
         pointsPossibles: question.points,
         pointsObtenus: correcte ? question.points : 0,
         correcte,
-        reponsesChoisies: idsChoisis,
-        reponsesCorrectes: idsCorrects,
+        reponsesChoisies: idsChoisis.map((id) => ({ id, texte: reponsesParId.get(id)!.texteReponse })),
+        reponsesCorrectes: idsCorrects.map((id) => ({ id, texte: reponsesParId.get(id)!.texteReponse })),
       });
     }
 
